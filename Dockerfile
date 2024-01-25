@@ -1,10 +1,10 @@
-FROM runpod/base:0.4.4-cuda12.1.0
+FROM runpod/pytorch:2.1.1-py3.10-cuda12.1.1-devel-ubuntu22.04
 
-RUN curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install linux \
-  --extra-conf "sandbox = false" \
-  --init none \
-  --no-confirm
-ENV PATH="${PATH}:/nix/var/nix/profiles/default/bin"
-RUN nix-env -f "<nixpkgs>" -iA fish direnv pyenv python311
-# COPY config.fish /root/.config/fish/config.fish
-# RUN chsh -s $(which fish)
+RUN curl -fsSL https://code-server.dev/install.sh | sh
+RUN code-server --install-extension wesbos.theme-cobalt2
+RUN code-server --install-extension ms-toolsai.jupyter
+RUN code-server --install-extension ms-python.python
+RUN code-server --install-extension ms-python.autopep8
+COPY settings.json /root/.local/share/code-server/User/settings.json
+
+COPY post_start.sh /post_start.sh
