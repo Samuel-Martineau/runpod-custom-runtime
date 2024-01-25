@@ -1,5 +1,8 @@
 FROM runpod/pytorch:2.1.1-py3.10-cuda12.1.1-devel-ubuntu22.04
 
+RUN apt-get update && apt-get install -y fish
+RUN chsh -s /usr/bin/fish
+
 RUN curl -fsSL https://code-server.dev/install.sh | sh
 RUN code-server --install-extension wesbos.theme-cobalt2
 RUN code-server --install-extension ms-toolsai.jupyter
